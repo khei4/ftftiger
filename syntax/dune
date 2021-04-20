@@ -1,0 +1,12 @@
+(library
+ (name syntax))
+
+(ocamllex lexer)
+
+(menhir
+ ; (flags -v --trace)
+ (modules parser))
+
+(env
+  (dev
+    (flags (:standard -w -30))))
