@@ -1,10 +1,12 @@
 type pos = {lnum : int; bol: int}
-
+[@@deriving show, eq]
 type symbol = string
+[@@deriving show, eq]
 type var = 
   | SimpleVar of symbol * pos 
   | FieldVar of var * symbol * pos 
   | SubscriptVar of var * exp * pos 
+  [@@deriving show, eq]
 and exp = 
   | VarExp of var 
   | NilExp 
@@ -21,16 +23,23 @@ and exp =
   | BreakExp of pos 
   | LetExp of {decs: dec list; body: exp; pos: pos}
   | ArrayExp of {typ: symbol; size: exp; init: exp; pos: pos}
+  [@@deriving show, eq]
 and dec = FunctionDec of fundec list 
   | VarDec of {name: symbol; escape: bool ref; typ: (symbol * pos) option; init: exp; pos: pos}
-  | TypeDec of (td list )
-and td = {name: symbol; ty: ty; pos: pos}
+  | TypeDec of ( typedec list )
+  [@@deriving show, eq]
+and typedec = {name: symbol; ty: ty; pos: pos}
+[@@deriving show, eq]
 and ty = NameTy of symbol * pos 
   | RecordTy of (field list)
   | ArrayTy of symbol * pos 
+  [@@deriving show, eq]
 and oper = PlusOp | MinusOp | TimesOp | DivideOp | EqOp | NeqOp | LtOp | LeOp | GtOp | GeOp
+[@@deriving show, eq]
 and field = {name: symbol; escape: bool ref; typ: symbol; pos: pos}
+[@@deriving show, eq]
 and fundec = {name: symbol; params: field list; result: (symbol * pos) option ; body: exp; pos: pos}
+[@@deriving show, eq]
 
 let to_pos (p: Lexing.position) : pos = {lnum = p.pos_lnum; bol = p.pos_bol}
 

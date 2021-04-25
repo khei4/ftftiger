@@ -1,11 +1,13 @@
 (library
- (name syntax))
+  (name syntax)
+  (preprocess
+  (pps ppx_deriving.show ppx_deriving.eq)))
 
 (ocamllex lexer)
 
 (menhir
- ; (flags -v --trace)
- (modules parser))
+ (modules parser)
+ (flags --explain))
 
 (env
   (dev

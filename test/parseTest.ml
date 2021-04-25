@@ -9,13 +9,13 @@ let parse p : exp =
   Parser.program Lexer.token lexbuf
 
 let basic_parse_test name expected input =
-  name >:: fun _ -> assert_equal expected (parse input) 
+  name >:: fun _ -> assert_equal expected (parse input) ~printer:show_exp ~cmp:equal_exp
 
 
 let suite =
   "Basic"
   >::: [
-         basic_parse_test "single_digit" (IntExp 1) "1";
+         basic_parse_test "single_digit" (IntExp 12) "1";
          basic_parse_test "multiple_digit" (IntExp 1234) "1234";
        ]
 

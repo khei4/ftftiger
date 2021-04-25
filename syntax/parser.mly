@@ -7,7 +7,7 @@
 %token <string> STR
 %token WHILE FOR TO BREAK LET IN END FUNCTION VAR TYPE ARRAY IF THEN ELSE DO OF NIL
 
-
+%token EOF
 %token COMMA
 %token COLON
 %token SEMICOLON
@@ -15,20 +15,15 @@
 %token LBRACKET RBRACKET
 %token LBRACE RBRACE 
 %token DOT
-%token PLUS
-%token MINUS
-%token TIMES
-%token DIV
-%token EQ
-%token NEQ
-%token LT
-%token LE
-%token GT
-%token GE
-%token AND
-%token OR
-%token ASS
-%token EOF
+%token PLUS MINUS
+%token TIMES DIV
+%token EQ NEQ LT LE GT GE
+%token AND OR
+%token ASSIGN
+
+%nonassoc EQ NEQ 
+%left PLUS MINUS
+%left TIMES DIV
 
 %type <Ast.exp> program
 %start program

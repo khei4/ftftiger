@@ -91,7 +91,7 @@ rule token = parse
 | '|'
     {OR}
 | ":="
-    {ASS}
+    {ASSIGN}
 | eof 
     {EOF}
 | space+
