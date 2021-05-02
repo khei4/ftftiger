@@ -2,7 +2,7 @@
     open Parser
 }
 
-let space = [' ' '\t' '\n' '\r']
+let space = [' ' '\t' '\r']
 let digit = ['0'-'9']
 let alpha = ['A'-'Z''a'-'z''_']
 let ident = alpha (digit|alpha)*
@@ -92,8 +92,27 @@ rule token = parse
     {OR}
 | ":="
     {ASSIGN}
+| ("\r\n" | "\r" | "\n")
+    { Lexing.new_line lexbuf;
+    token lexbuf }
+| "/*"
+    { comment lexbuf;
+    token lexbuf }
 | eof 
     {EOF}
 | space+
     {token lexbuf}
+and comment = parse
+| ("\r\n" | "\r" | "\n")
+    { Lexing.new_line lexbuf;
+    comment lexbuf }
+| "*/"
+    { () }
+| "/*"
+    { comment lexbuf;
+    comment lexbuf }
+| eof
+    { Printf.eprintf "warning: unterminated comment/" }
+| _
+    { comment lexbuf }
 
