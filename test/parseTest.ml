@@ -15,8 +15,12 @@ let basic_parse_test name expected input =
 let suite =
   "Basic"
   >::: [
-         basic_parse_test "single_digit" (IntExp 12) "1";
-         basic_parse_test "multiple_digit" (IntExp 1234) "1234";
-       ]
-
+        basic_parse_test "single_digit" (IntExp 1) "1";
+        basic_parse_test "multiple_digit" (IntExp 1234) "1234";
+        basic_parse_test "field access" (VarExp
+        (SubscriptVar ((SimpleVar ("obj", { lnum = 1; bol = 0 })),
+           (VarExp (SimpleVar ("fi", { lnum = 1; bol = 0 }))),
+           { lnum = 1; bol = 0 }))) "obj[fi]";
+      ]
+      
 let () = run_test_tt_main suite
