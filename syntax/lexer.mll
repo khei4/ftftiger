@@ -2,7 +2,7 @@
     open Parser
 }
 
-let space = [' ' '\t' '\r']
+let space = [' ' '\t' ]
 let digit = ['0'-'9']
 let alpha = ['A'-'Z''a'-'z''_']
 let ident = alpha (digit|alpha)*
@@ -46,6 +46,8 @@ rule token = parse
     {ID(id)}
 | digit+
     {INT(int_of_string (Lexing.lexeme lexbuf))}
+| '"'
+    {string (Buffer.create 0) lexbuf}
 | ','
     {COMMA}
 | ':'
@@ -115,4 +117,8 @@ and comment = parse
     { Printf.eprintf "warning: unterminated comment/" }
 | _
     { comment lexbuf }
-
+and string buf = parse
+| '"'
+    {STR(Buffer.contents buf)}
+| _ as c
+    {Buffer.add_char buf c; string buf lexbuf}

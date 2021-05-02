@@ -112,6 +112,20 @@ let suite =
              Parser.END;
            ]
            "../samples/test2.tig";
+           sample_lex_test "test9: wrong if"
+           [
+             Parser.IF;
+             Parser.LPAREN;
+             Parser.INT 5;
+             Parser.GT;
+             Parser.INT 4;
+             Parser.RPAREN;
+             Parser.THEN;
+             Parser.INT 13;
+             Parser.ELSE;
+             Parser.STR " ";
+           ]
+           "../samples/test9.tig";
        ]
 
 let () = run_test_tt_main suite

@@ -34,14 +34,12 @@ and ty = NameTy of symbol * pos
   | RecordTy of (field list)
   | ArrayTy of symbol * pos 
   [@@deriving show, eq]
-and oper = PlusOp | MinusOp | TimesOp | DivideOp | EqOp | NeqOp | LtOp | LeOp | GtOp | GeOp
+and oper = PlusOp | MinusOp | TimesOp | DivideOp | EqOp | NeqOp | LtOp | LeOp | GtOp | GeOp | AndOp | OrOp
 [@@deriving show, eq]
 and field = {name: symbol; escape: bool ref; typ: symbol; pos: pos}
 [@@deriving show, eq]
 and fundec = {name: symbol; params: field list; result: (symbol * pos) option ; body: exp; pos: pos}
 [@@deriving show, eq]
-
-let to_pos (p: Lexing.position) : pos = {lnum = p.pos_lnum; bol = p.pos_bol}
 
 
 
