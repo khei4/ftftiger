@@ -14,9 +14,13 @@ let lex_from_file filename =
   readloop lexbuf
 
 let rec print_tokenlist tokl =
-  match tokl with tok :: t -> print_token tok ^ ", " ^ print_tokenlist t | [] -> "\n"
+  match tokl with
+  | tok :: t -> print_token tok ^ "; " ^ print_tokenlist t
+  | [] -> "\n"
 
 and print_token tok =
+  "Parser."
+  ^
   match tok with
   | Parser.LET -> "LET"
   | Parser.TYPE -> "TYPE"
@@ -31,6 +35,7 @@ and print_token tok =
   | Parser.INT v -> "INT " ^ string_of_int v
   | Parser.IN -> "IN"
   | Parser.END -> "END"
+  | Parser.ARRAY -> "ARRAY"
   | _ -> "hoge"
 
 let basic_lex_test name expected input =
@@ -78,6 +83,35 @@ let suite =
              Parser.END;
            ]
            "../samples/test1.tig";
+         sample_lex_test "test2"
+           [
+             Parser.LET;
+             Parser.TYPE;
+             Parser.ID "myint";
+             Parser.EQ;
+             Parser.ID "int";
+             Parser.TYPE;
+             Parser.ID "arrtype";
+             Parser.EQ;
+             Parser.ARRAY;
+             Parser.OF;
+             Parser.ID "myint";
+             Parser.VAR;
+             Parser.ID "arr1";
+             Parser.COLON;
+             Parser.ID "arrtype";
+             Parser.ASSIGN;
+             Parser.ID "arrtype";
+             Parser.LBRACKET;
+             Parser.INT 10;
+             Parser.RBRACKET;
+             Parser.OF;
+             Parser.INT 0;
+             Parser.IN;
+             Parser.ID "arr1";
+             Parser.END;
+           ]
+           "../samples/test2.tig";
        ]
 
 (* let
