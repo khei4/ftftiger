@@ -114,11 +114,4 @@ let suite =
            "../samples/test2.tig";
        ]
 
-(* let
-  type  arrtype = array of int
-  var arr1:arrtype := arrtype [10] of 0
-in
-  arr1
-end *)
-
 let () = run_test_tt_main suite
